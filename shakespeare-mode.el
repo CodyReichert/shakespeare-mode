@@ -9,8 +9,7 @@
 
 
 ;;; REQUIREMENTS
-;; require css and js2 mode for syntax and indentation in
-;; lucius and julius files (they work so well, why rewrite them).
+;; require css and js2 mode for syntax and indentation in lucius and julius files
 (require 'css-mode)
 (unless (or (boundp 'css-navigation-syntax-table)
             (functionp 'css-smie-rules))
@@ -37,18 +36,9 @@
 
 
 
-;;; Globals
-;; regex for yesod interpolation and control flow statements
-(defvar shakespeare-interpolation-regex
-  "\\([@^#]{[^}]+}\\)")
-(defvar shakespeare-control-flow-regex
-  "^[ \t]*\\($\\w+\\)")
-(defconst shakespeare-hamlet-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
-
-
-
-;;; Syntax Highlighting
+;;; Keyword syntax highlighting
 ;; hamlet
+(defconst shakespeare-hamlet-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
 (defconst shakespeare-hamlet-font-lock-keywords
   `(
     ("^!!!$" . font-lock-keyword-face)
@@ -89,21 +79,18 @@
   "The shakespeare mode syntax table.")
 
 ;; lucius syntax table
-(defvar shakespeare-lucius-mode-syntax-table nil)
 
 ;; lucius syntax table
 (defvar shakespeare-julius-mode-syntax-table)
 
 
 
-;;; Indention rules
-
-
-
 ;;; Derive Modes
 ;; derive hamlet mode
 (define-derived-mode shakespeare-hamlet-mode fundamental-mode "Shakespeare - Hamlet"
-  "A major mode for hamlet, lucius, and julius files."
+  "A major mode for hamlet, lucius, and julius files.
+  \\{shakespeare-mode-map}"
+
   (kill-all-local-variables) ;; kill all local variables before loading ours
   (set-syntax-table shakespeare-hamlet-mode-syntax-table)
   (use-local-map shakespeare-mode-map) ;; show mode map
