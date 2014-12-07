@@ -101,16 +101,35 @@
 
 ;;derive lucius mode
 (define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare - Lucius"
-  "A major mode for hamlet, lucius, and julius files."
-  (kill-all-local-variables) ;; kill all local variables before loading ours
+  "A major mode for hamlet, lucius, and julius files.
+  \\{shakespeare-mode-map}"
   (use-local-map shakespeare-mode-map) ;; show mode map
-  (set (make-local-variable 'font-lock-defaults) ;; set local variables
-       '(shakespeare-lucius-font-lock-keywords))
+  (font-lock-add-keywords nil shakespeare-lucius-font-lock-keywords)
 
-  (setq major-mode 'shakespeare-lucius-mode) ;; display mode in mode-line
+  ;; comments
+  ;; cpp-style comments
+  (modify-syntax-entry ?/ ". 124b" shakespeare-lucius-mode-syntax-table)
+  (modify-syntax-entry ?* ". 23" shakespeare-lucius-mode-syntax-table)
+  (modify-syntax-entry ?\n "> b" shakespeare-lucius-mode-syntax-table)
+  ;; Special chars that sometimes come at the beginning of words.
+  (modify-syntax-entry ?. "'" shakespeare-lucius-mode-syntax-table)
+  (set (make-local-variable 'comment-start) "//")
+  (set (make-local-variable 'comment-end) "")
+
+  (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line)
+
+  (setq major-mode 'shakespeare-lucius-mode)
   (setq mode-name "Shakespeare (lucius)") ;; sets the name in the mode-line
   (run-hooks 'shakespeare-lucius-mode-hook))
 
+
+
+;;; Indtentaion rules
+;; lucius indentation
+(defun less-css-indent-line ()
+  "Indent current line according to LESS CSS indentation rules."
+  (let ((css-navigation-syntax-table shakespeare-lucius-mode-syntax-table))
+    (css-indent-line)))
 
 
 ;;; Load em up
