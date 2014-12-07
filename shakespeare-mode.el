@@ -51,7 +51,7 @@
      (1 font-lock-variable-name-face nil t) ; Attribute names
      (2 font-lock-string-face nil t) ; Attribute values
      (3 font-lock-variable-name-face nil t)) ; #id and .class
-    ;; interpolted variables
+    ;; interpolated variables
     ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
     ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
 
@@ -67,6 +67,7 @@
     ("\\(?:[ \t{;]\\|^\\)\\(\\.[a-z_-][a-z-_0-9]*\\)[ \t]*;" . (1 font-lock-keyword-face))))
 
 
+
 ;;; Syntax Tables
 ;; Hamlet syntax table
 (defvar shakespeare-hamlet-mode-syntax-table
@@ -77,9 +78,7 @@
     st)
   "The shakespeare mode syntax table.")
 
-;; lucius syntax table
-
-;; lucius syntax table
+;; jucius syntax table
 (defvar shakespeare-julius-mode-syntax-table)
 
 
@@ -89,7 +88,6 @@
 (define-derived-mode shakespeare-hamlet-mode fundamental-mode "Shakespeare - Hamlet"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
-
   (kill-all-local-variables) ;; kill all local variables before loading ours
   (set-syntax-table shakespeare-hamlet-mode-syntax-table)
   (use-local-map shakespeare-mode-map) ;; show mode map
@@ -106,8 +104,7 @@
   (use-local-map shakespeare-mode-map) ;; show mode map
   (font-lock-add-keywords nil shakespeare-lucius-font-lock-keywords)
 
-  ;; comments
-  ;; cpp-style comments
+  ;; syntax for cpp comments
   (modify-syntax-entry ?/ ". 124b" shakespeare-lucius-mode-syntax-table)
   (modify-syntax-entry ?* ". 23" shakespeare-lucius-mode-syntax-table)
   (modify-syntax-entry ?\n "> b" shakespeare-lucius-mode-syntax-table)
@@ -115,9 +112,8 @@
   (modify-syntax-entry ?. "'" shakespeare-lucius-mode-syntax-table)
   (set (make-local-variable 'comment-start) "//")
   (set (make-local-variable 'comment-end) "")
-
+  ;; indentation
   (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line)
-
   (setq major-mode 'shakespeare-lucius-mode)
   (setq mode-name "Shakespeare (lucius)") ;; sets the name in the mode-line
   (run-hooks 'shakespeare-lucius-mode-hook))
@@ -132,10 +128,12 @@
     (css-indent-line)))
 
 
+
 ;;; Load em up
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.hamlet\\'" . shakespeare-hamlet-mode))
 (add-to-list 'auto-mode-alist '("\\.lucius\\'" . shakespeare-lucius-mode))
 
 (provide 'shakespeare-mode)
+
 ;;; shakespeare-mode ends here
