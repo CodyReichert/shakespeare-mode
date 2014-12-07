@@ -51,9 +51,9 @@
      (1 font-lock-variable-name-face nil t) ; Attribute names
      (2 font-lock-string-face nil t) ; Attribute values
      (3 font-lock-variable-name-face nil t)) ; #id and .class
-
-    (shakespeare-interpolation-regex . font-lock-preprocessor-face)
-    (shakespeare-control-flow-regex . font-lock-keyword-face)))
+    ;; interpolted variables
+    ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
+    ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
 
 ;;  lucius
 (defconst shakespeare-lucius-font-lock-keywords
@@ -61,9 +61,8 @@
     ("@[a-z_-][a-z-_0-9]*" . font-lock-constant-face)
     ("&" . font-lock-preprocessor-face)
 
-    (shakespeare-interpolation-regex . font-lock-preprocessor-face)
-    (shakespeare-control-flow-regex . font-lock-keyword-face)
-
+    ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
+    ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)
     ;; Mixins
     ("\\(?:[ \t{;]\\|^\\)\\(\\.[a-z_-][a-z-_0-9]*\\)[ \t]*;" . (1 font-lock-keyword-face))))
 
