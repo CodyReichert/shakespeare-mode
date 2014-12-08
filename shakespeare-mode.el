@@ -10,6 +10,7 @@
 
 ;;; REQUIREMENTS
 ;; require css and js2 mode for syntax and indentation in lucius and julius files
+(require 'sgml-mode)
 (require 'css-mode)
 (unless (or (boundp 'css-navigation-syntax-table)
             (functionp 'css-smie-rules))
@@ -85,15 +86,16 @@
 
 ;;; Derive Modes
 ;; derive hamlet mode
-(define-derived-mode shakespeare-hamlet-mode fundamental-mode "Shakespeare - Hamlet"
+(define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare - Hamlet"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
-  (kill-all-local-variables) ;; kill all local variables before loading ours
+  ;;(kill-all-local-variables) ;; kill all local variables before loading ours
   (set-syntax-table shakespeare-hamlet-mode-syntax-table)
   (use-local-map shakespeare-mode-map) ;; show mode map
   (set (make-local-variable 'font-lock-defaults) ;; set local variables
        '(shakespeare-hamlet-font-lock-keywords))
   (setq major-mode 'shakespeare-hamlet-mode) ;; display mode in mode-line
+  (set (make-local-variable 'sgml-basic-offset) 2)
   (setq mode-name "Shakespeare (hamlet)") ;; sets the name in the mode-line
   (run-hooks 'shakespeare-hamlet-mode-hook))
 
@@ -103,7 +105,6 @@
   \\{shakespeare-mode-map}"
   (use-local-map shakespeare-mode-map) ;; show mode map
   (font-lock-add-keywords nil shakespeare-lucius-font-lock-keywords)
-
   ;; syntax for cpp comments
   (modify-syntax-entry ?/ ". 124b" shakespeare-lucius-mode-syntax-table)
   (modify-syntax-entry ?* ". 23" shakespeare-lucius-mode-syntax-table)
