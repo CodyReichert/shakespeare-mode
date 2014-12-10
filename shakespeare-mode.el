@@ -16,6 +16,8 @@
             (functionp 'css-smie-rules))
   (error "Wrong css-mode.el.  Please use the version bundled with Emacs >= 23"))
 
+(autoload 'javascript-mode "javascript-mode" "Javascript-Mode." t)
+(autoload 'js2-mode "js2-mode" "Js2-Mode." t)
 
 
 ;;; Show Hooks
@@ -37,7 +39,7 @@
 
 
 
-;;; Keyword syntax highlighting
+;;; Keyword Highlighting
 ;; hamlet
 (defconst shakespeare-hamlet-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
 (defconst shakespeare-hamlet-font-lock-keywords
@@ -67,6 +69,12 @@
     ;; Mixins
     ("\\(?:[ \t{;]\\|^\\)\\(\\.[a-z_-][a-z-_0-9]*\\)[ \t]*;" . (1 font-lock-keyword-face))))
 
+;; julius
+(defconst shakespeare-julius-font-lock-keywords
+  '(
+    ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
+    ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
+
 
 
 ;;; Syntax Tables
@@ -80,8 +88,6 @@
   "The shakespeare mode syntax table.")
 
 ;; jucius syntax table
-(defvar shakespeare-julius-mode-syntax-table)
-
 
 
 ;;; Derive Modes
@@ -94,9 +100,9 @@
   (use-local-map shakespeare-mode-map) ;; show mode map
   (set (make-local-variable 'font-lock-defaults) ;; set local variables
        '(shakespeare-hamlet-font-lock-keywords))
-  (setq major-mode 'shakespeare-hamlet-mode) ;; display mode in mode-line
+  (setq major-mode 'shakespeare-hamlet-mode)
   (set (make-local-variable 'sgml-basic-offset) 2)
-  (setq mode-name "Shakespeare (hamlet)") ;; sets the name in the mode-line
+  (setq mode-name "Shakespeare (hamlet)")
   (run-hooks 'shakespeare-hamlet-mode-hook))
 
 ;;derive lucius mode
@@ -119,11 +125,20 @@
   (setq mode-name "Shakespeare (lucius)") ;; sets the name in the mode-line
   (run-hooks 'shakespeare-lucius-mode-hook))
 
+;; derive julius mode
+(define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare - Julius"
+  "A major mode for hamlet, lucius, and julius files.
+  \\{shakespeare-mode-map}"
+  (use-local-map shakespeare-mode-map)
+  (font-lock-add-keywords nil shakespeare-julius-font-lock-keywords)
+  (setq mode-name "Shakespeare (julius)")
+  (run-hooks 'shakespeare-julius-mode-hook))
+
 
 
 ;;; Indtentaion rules
 ;; lucius indentation
-(defun less-css-indent-line ()
+(defun shakespeare-lucius-indent-line ()
   "Indent current line according to LESS CSS indentation rules."
   (let ((css-navigation-syntax-table shakespeare-lucius-mode-syntax-table))
     (css-indent-line)))
