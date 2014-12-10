@@ -1,0 +1,76 @@
+* Shakespeare Mode
+  A major mode for editing Shakespearean templates (hamlet, lucius, julius).
+
+** Installation
+   The package currently isn't in ELPA, but the install in painless.
+   
+   Clone this repo and add it to your emacs load path by adding the following
+   line to your .emacs:
+
+   (add-to-list 'load-path "/path/to/this/clone/").
+
+   /after/ that line, load shakespeare-mode by adding this line:
+
+   (load "shakespeare-mode")
+
+   And that's it. Open up a hamlet, lucius, or julius file to make sure it worked.
+
+
+** Usage
+   After installation, you'll have three new commands:
+
+     shakespeare-hamlet-mode
+     shakespeare-julius-mode
+     shakespeare-lucius-mode
+
+   These are major modes. If you loaded shakespeare-mode correctly, then
+   .hamlet, .lucius, and .julius should inherit these modes automatically.
+
+   If for any reason they are not loading on the correct file types, you can of
+   course try loading them explicity by running `M-x shakespeare-hamlet-mode` in
+   the appropriate buffer OR you can  always try adding the following line to
+   your .emacs:
+
+   (add-to-list 'auto-mode-alist  '("\\.lucius\\'" . shakespeare-lucius-mode))
+
+
+** Features
+   Currently, shakespeare-mode supports basic syntax highlighting and indentation
+   for hamlet, lucius, and julius files.
+
+*** Variable Interpolation
+     All of the modes support syntax highlighting for variable interpolation:
+
+    #{...}
+    @{...}
+    ^{...}
+
+    ...etc, are highlighted inline.
+
+*** Hamlet Mode
+    shakespeare-hamlet-mode has pretty full support hamlet featured (let me know
+    if any are missing!):
+
+    - control flow statements ($if, $forall, $maybe, etc)
+    - shorthand class and id attributes (<p .some-class #some-id>)
+    - optional quotes around attribute values
+    - no need to explicitly tag `div` elements. 
+
+*** Lucius Mode
+    shakespeare-lucius-mode supports a lot of the same things has shakespeare-hamlet-mode
+
+    - url and variable interpolation
+    - nested css blocks
+    - variable declaration
+    - lucius mixins
+
+*** Julius Mode
+    Julius mode is the most basic of the modes, but supports full* Javascript syntax
+    highlighting (derived from javascript-mode) and the three forms of variable
+    interpolation mentioned above.
+
+
+** ToDo (in order of priority)
+    - Support for setting option attributes with colons, as dicussed [[http://www.yesodweb.com/book/shakespearean-templates#shakespearean-templates_attributes][here]].
+    - Support far Cassius (shakespeare-cassius-mode)
+    - 
