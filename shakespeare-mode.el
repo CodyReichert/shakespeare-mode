@@ -9,15 +9,19 @@
 
 
 ;;; REQUIREMENTS
-;; require css and js2 mode for syntax and indentation in lucius and julius files
+;; sgml mode for hamlet
 (require 'sgml-mode)
+
+;; javascript-mode is used for syntax highlighting and indentation
+(autoload 'javascript-mode "javascript-mode" "Javascript-Mode." t)
+
+;; css mode for lucius
+;; we make sure it's the right one by checking for the functions we need
 (require 'css-mode)
 (unless (or (boundp 'css-navigation-syntax-table)
             (functionp 'css-smie-rules))
   (error "Wrong css-mode.el.  Please use the version bundled with Emacs >= 23"))
 
-(autoload 'javascript-mode "javascript-mode" "Javascript-Mode." t)
-(autoload 'js2-mode "js2-mode" "Js2-Mode." t)
 
 
 ;;; Show Hooks
@@ -37,6 +41,9 @@
     map)
   "Keymap for Shakespeare major mode.")
 
+(defvar shakespeare-hamlet-mode-map nil)
+(defvar shakespeare-lucius-mode-map nil)
+(defvar shakespeare-julius-mode-map nil)
 
 
 ;;; Keyword Highlighting
@@ -46,7 +53,8 @@
   `(
     ("^!!!$" . font-lock-keyword-face)
     ;; Tag names.
-    (,(concat "</?\\(" shakespeare-hamlet-name-regexp "\\)") 1 font-lock-function-name-face)
+    (,(concat "</?\\(" shakespeare-hamlet-name-regexp "\\)")
+     1 font-lock-function-name-face)
     ;; Attributes: name=val, #id, or .class.
     (,(concat "\\(?:^\\|[ \t]\\)\\(?:\\("
               shakespeare-hamlet-name-regexp "\\)=\\([^@^ \r\n]*\\)\\|<?\\([.#]"
@@ -63,13 +71,15 @@
   '(;; Variables
     ("@[a-z_-][a-z-_0-9]*" . font-lock-constant-face)
     ("&" . font-lock-preprocessor-face)
-
+    ;; hamlet interpolation and control flow keywords
     ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
     ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)
     ;; Mixins
-    ("\\(?:[ \t{;]\\|^\\)\\(\\.[a-z_-][a-z-_0-9]*\\)[ \t]*;" . (1 font-lock-keyword-face))))
+    ("\\(?:[ \t{;]\\|^\\)\\(\\.[a-z_-][a-z-_0-9]*\\)[ \t]*;"
+     . (1 font-lock-keyword-face))))
 
 ;; julius
+;; hamlet interpolation and control flow keywords
 (defconst shakespeare-julius-font-lock-keywords
   '(
     ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
@@ -78,6 +88,7 @@
 
 
 ;;; Syntax Tables
+;;; the lucius and julius syntax tables are derived from their parent-mode
 ;; Hamlet syntax table
 (defvar shakespeare-hamlet-mode-syntax-table
   (let ((st (make-syntax-table)))
@@ -87,11 +98,9 @@
     st)
   "The shakespeare mode syntax table.")
 
-;; jucius syntax table
 
 
 ;;; Derive Modes
-;; derive hamlet mode
 (define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare - Hamlet"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
@@ -105,7 +114,6 @@
   (setq mode-name "Shakespeare (hamlet)")
   (run-hooks 'shakespeare-hamlet-mode-hook))
 
-;;derive lucius mode
 (define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare - Lucius"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
@@ -125,7 +133,6 @@
   (setq mode-name "Shakespeare (lucius)") ;; sets the name in the mode-line
   (run-hooks 'shakespeare-lucius-mode-hook))
 
-;; derive julius mode
 (define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare - Julius"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
@@ -149,7 +156,7 @@
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.hamlet\\'" . shakespeare-hamlet-mode))
 (add-to-list 'auto-mode-alist '("\\.lucius\\'" . shakespeare-lucius-mode))
+(add-to-list 'auto-mode-alist '("\\.julius\\'" . shakespeare-julius-mode))
 
 (provide 'shakespeare-mode)
-
 ;;; shakespeare-mode ends here
