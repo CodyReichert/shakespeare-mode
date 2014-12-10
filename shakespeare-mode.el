@@ -41,10 +41,6 @@
     map)
   "Keymap for Shakespeare major mode.")
 
-(defvar shakespeare-hamlet-mode-map nil)
-(defvar shakespeare-lucius-mode-map nil)
-(defvar shakespeare-julius-mode-map nil)
-
 
 ;;; Keyword Highlighting
 ;; hamlet
