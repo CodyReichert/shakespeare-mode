@@ -24,7 +24,7 @@
 ;; Submit issues at https://github.com/CodyReichert/shakespeare-mode
 ;; or email me directly at cody@reichertbrothers.com.
 ;;
-;; Code:
+;;; Code:
 
 
 
