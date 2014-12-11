@@ -1,10 +1,10 @@
 * Shakespeare Mode
-  A major mode that provides syntax highlighting an indentation for
+  A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
 
 
 ** Installation
-   The package currently isn't in any repository, but the install in painless.
+   The package currently isn't in any emacs repository, but the install in painless.
    
    Clone this repo and add the directory to your emacs load path by adding the following
    line to your .emacs:
@@ -46,7 +46,7 @@
 
 ** Features
    Currently, shakespeare-mode supports basic syntax highlighting and indentation
-   for hamlet, lucius, and julius files.
+   for hamlet, lucius, and julius. Cassius files are not yet supported.
 
 *** Variable Interpolation
      All of the modes support syntax highlighting for variable interpolation:
@@ -57,10 +57,10 @@
         ^{...}
     #+END_SRC
 
-    ...etc, are highlighted inline.
+    ...these are highlighted inline.
 
 *** Hamlet Mode
-    shakespeare-hamlet-mode has pretty full support for hamlet features (let me know
+    shakespeare-hamlet-mode has full support for most hamlet features (let me know
     if any are missing!):
 
     - control flow statements (=$if=, =$forall=, =$maybe=, etc)
@@ -69,7 +69,7 @@
     - no need to explicitly tag =div= elements.
 
 *** Lucius Mode
-    shakespeare-lucius-mode supports a lot of the same things has shakespeare-hamlet-mode
+    shakespeare-lucius-mode supports a lot of the same things as shakespeare-hamlet-mode
 
     - url and variable interpolation
     - nested css blocks
@@ -78,8 +78,8 @@
 
 *** Julius Mode
     Julius mode is the most basic of the modes, but supports Javascript syntax
-    highlighting (derived from javascript-mode), indentation and the three forms
-    of variable interpolation mentioned above.
+    highlighting (derived from javascript-mode so it should work well with most julius),
+    indentation and the variable interpolation mentioned above.
 
 
 ** Todo (in order of priority)
@@ -87,6 +87,8 @@
     - Support for setting option attributes with colons, as dicussed [[http://www.yesodweb.com/book/shakespearean-templates#shakespearean-templates_attributes][here]].
     - Add syntax support for hamlet pagination
     - Support far Cassius (shakespeare-cassius-mode)
+    - Integration with html2hamlet for quick formatting of buffers and regions (eg, copy in html
+      and quickly reformat to hamlet.)
 
 
 ** Thanks
