@@ -1,5 +1,7 @@
 * Shakespeare Mode
-  A major mode for editing Shakespearean templates (hamlet, lucius, julius).
+  A major mode that provides syntax highlighting an indentation for
+  editing Shakespearean templates (hamlet, lucius, julius).
+
 
 ** Installation
    The package currently isn't in any repository, but the install in painless.
