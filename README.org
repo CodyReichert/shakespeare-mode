@@ -2,16 +2,20 @@
   A major mode for editing Shakespearean templates (hamlet, lucius, julius).
 
 ** Installation
-   The package currently isn't in ELPA, but the install in painless.
+   The package currently isn't in any repository, but the install in painless.
    
-   Clone this repo and add it to your emacs load path by adding the following
+   Clone this repo and add the directory to your emacs load path by adding the following
    line to your .emacs:
 
-   (add-to-list 'load-path "/path/to/this/clone/").
+   #+BEGIN_SRC elisp
+       (add-to-list 'load-path "/path/to/this/clone/")
+   #+END_SRC
 
-   /after/ that line, load shakespeare-mode by adding this line:
+   and /after/ that line, load shakespeare-mode by adding this line:
 
-   (load "shakespeare-mode")
+   #+BEGIN_SRC elisp
+       (load "shakespeare-mode")
+   #+END_SRC
 
    And that's it. Open up a hamlet, lucius, or julius file to make sure it worked.
 
@@ -19,19 +23,23 @@
 ** Usage
    After installation, you'll have three new commands:
 
-     shakespeare-hamlet-mode
-     shakespeare-julius-mode
-     shakespeare-lucius-mode
+   #+BEGIN_SRC elisp
+       shakespeare-hamlet-mode
+       shakespeare-julius-mode
+       shakespeare-lucius-mode
+   #+END_SRC
 
    These are major modes. If you loaded shakespeare-mode correctly, then
-   .hamlet, .lucius, and .julius should inherit these modes automatically.
+   =.hamlet=, =.lucius=, and =.julius= should inherit their mode automatically.
 
    If for any reason they are not loading on the correct file types, you can of
-   course try loading them explicity by running `M-x shakespeare-hamlet-mode` in
-   the appropriate buffer OR you can  always try adding the following line to
-   your .emacs:
+   course try loading them explicity by running =M-x shakespeare-hamlet-mode= in
+   the appropriate buffer OR you can always try adding the following line to
+   your .emacs (change to the correct file type):
 
-   (add-to-list 'auto-mode-alist  '("\\.lucius\\'" . shakespeare-lucius-mode))
+   #+BEGIN_SRC elisp
+       (add-to-list 'auto-mode-alist  '("\\.lucius\\'" . shakespeare-lucius-mode))
+   #+END_SRC
 
 
 ** Features
@@ -41,20 +49,22 @@
 *** Variable Interpolation
      All of the modes support syntax highlighting for variable interpolation:
 
-    #{...}
-    @{...}
-    ^{...}
+    #+BEGIN_SRC elisp
+        #{...}
+        @{...}
+        ^{...}
+    #+END_SRC
 
     ...etc, are highlighted inline.
 
 *** Hamlet Mode
-    shakespeare-hamlet-mode has pretty full support hamlet featured (let me know
+    shakespeare-hamlet-mode has pretty full support for hamlet features (let me know
     if any are missing!):
 
-    - control flow statements ($if, $forall, $maybe, etc)
-    - shorthand class and id attributes (<p .some-class #some-id>)
+    - control flow statements (=$if=, =$forall=, =$maybe=, etc)
+    - shorthand class and id attributes (=<p .some-class #some-id>=)
     - optional quotes around attribute values
-    - no need to explicitly tag `div` elements. 
+    - no need to explicitly tag =div= elements.
 
 *** Lucius Mode
     shakespeare-lucius-mode supports a lot of the same things has shakespeare-hamlet-mode
@@ -65,12 +75,13 @@
     - lucius mixins
 
 *** Julius Mode
-    Julius mode is the most basic of the modes, but supports full* Javascript syntax
-    highlighting (derived from javascript-mode) and the three forms of variable
-    interpolation mentioned above.
+    Julius mode is the most basic of the modes, but supports Javascript syntax
+    highlighting (derived from javascript-mode), indentation and the three forms
+    of variable interpolation mentioned above.
 
 
-** ToDo (in order of priority)
+** Todo (in order of priority)
+    - Put package in ELPA or similar repository
     - Support for setting option attributes with colons, as dicussed [[http://www.yesodweb.com/book/shakespearean-templates#shakespearean-templates_attributes][here]].
+    - Add syntax support for hamlet pagination
     - Support far Cassius (shakespeare-cassius-mode)
-    - 
