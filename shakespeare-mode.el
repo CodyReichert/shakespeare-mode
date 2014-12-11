@@ -1,10 +1,30 @@
-;;; Package --- shakespeare-mode.el
-;;; Summary --- major mode for shakespeare templates
+;;; shakespeare-mode.el --- A major mode for editing Shakespearean templates.
+;;
+;; Copyright (C) 2014 Cody Reichert
+;;
+;; Author: Cody Reichert
+;; URL: http://github.com/CodyReichert/shakespeare-mode
+;; Keywords: shakespe hamlet lucius julius mode
+;; Version: DEV
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3 of
+;; the License, or (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be
+;; useful, but WITHOUT ANY WARRANTY; without even the implied
+;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+;; PURPOSE.  See the GNU General Public License for more details.
+;;
 ;;; Commentary:
-;;; An Emacs mode for hamlet, lucius, and julius files
-;;; Cody Reichert 2014
-;;;
-;;; Code:
+;; A major mode that provides syntax highlighting an indentation for
+;; editing Shakespearean templates (hamlet, lucius, julius).
+;;
+;; Submit issues at https://github.com/CodyReichert/shakespeare-mode
+;; or email me directly at cody@reichertbrothers.com.
+;;
+;; Code:
 
 
 
