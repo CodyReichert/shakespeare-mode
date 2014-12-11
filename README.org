@@ -85,3 +85,14 @@
     - Support for setting option attributes with colons, as dicussed [[http://www.yesodweb.com/book/shakespearean-templates#shakespearean-templates_attributes][here]].
     - Add syntax support for hamlet pagination
     - Support far Cassius (shakespeare-cassius-mode)
+
+
+** Thanks
+   [[purcell's less-css-mode]]
+   I was originally using less-css-mode for editing lucius files, so I used parts of this
+   mode's modified syntax-table to compose lucius'.
+
+   [[https://github.com/lightquake/hamlet-mode][lightquake's hamlet mode]]
+   I was able to use parts of the regexp's from this repo for syntax highlighting,
+   and parts of the syntax-table. There's been some reformatting and minor restructure
+   but this was a big help.
