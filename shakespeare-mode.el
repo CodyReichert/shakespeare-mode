@@ -136,20 +136,15 @@
 
 
 ;;; Derive Modes
-(define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare - Hamlet"
-  "A major mode for hamlet, lucius, and julius files.
+(define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare (Hamlet)"
+  "A major mode for shakespearean hamlet files.
   \\{shakespeare-mode-map}"
-  (set-syntax-table shakespeare-hamlet-mode-syntax-table)
   (use-local-map shakespeare-mode-map) ;; show mode map
-  (set (make-local-variable 'font-lock-defaults) ;; set local variables
-       '(shakespeare-hamlet-font-lock-keywords))
-  (setq major-mode 'shakespeare-hamlet-mode)
-  (set (make-local-variable 'sgml-basic-offset) 2)
-  (setq mode-name "Shakespeare (hamlet)")
-  (run-hooks 'shakespeare-hamlet-mode-hook))
+  (setq font-lock-defaults '(shakespeare-hamlet-font-lock-keywords))
+  (set (make-local-variable 'sgml-basic-offset) 2))
 
-(define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare - Lucius"
-  "A major mode for hamlet, lucius, and julius files.
+(define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare (Lucius)"
+  "A major mode for shakespearean lucius files.
   \\{shakespeare-mode-map}"
   (use-local-map shakespeare-mode-map) ;; show mode map
   (font-lock-add-keywords nil shakespeare-lucius-font-lock-keywords)
@@ -162,18 +157,13 @@
   (set (make-local-variable 'comment-start) "//")
   (set (make-local-variable 'comment-end) "")
   ;; indentation
-  (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line)
-  (setq major-mode 'shakespeare-lucius-mode)
-  (setq mode-name "Shakespeare (lucius)") ;; sets the name in the mode-line
-  (run-hooks 'shakespeare-lucius-mode-hook))
+  (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line))
 
-(define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare - Julius"
-  "A major mode for hamlet, lucius, and julius files.
+(define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare (Julius)"
+  "A major mode for shakespearean julius files.
   \\{shakespeare-mode-map}"
   (use-local-map shakespeare-mode-map)
-  (font-lock-add-keywords nil shakespeare-julius-font-lock-keywords)
-  (setq mode-name "Shakespeare (julius)")
-  (run-hooks 'shakespeare-julius-mode-hook))
+  (font-lock-add-keywords nil shakespeare-julius-font-lock-keywords))
 
 
 
