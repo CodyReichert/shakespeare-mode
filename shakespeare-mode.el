@@ -102,32 +102,27 @@
 
 
 
-;;; Syntax Tables
-;; The lucius and julius syntax tables are derived from their parent-mode
-;;
-;; Hamlet syntax table
-(defvar shakespeare-hamlet-mode-syntax-table
-  (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?< "(>" st)
-    (modify-syntax-entry ?> ")<" st)
-    (modify-syntax-entry ?\\ "w" st)
-    st)
-  "The shakespeare mode syntax table.")
+;;; Minor Mode for mode-maps and hooks
+(define-minor-mode shakespeare-mode
+  "Shakespeare Mode minor mode for keymaps and mode-hooks."
+  :init nil
+  :lighter ""
+  :keymap (let ((map (make-sparse-keymap)))))
 
 
 
-;;; Derive Modes
+;;; Derive Major Modes
 (define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare (Hamlet)"
   "A major mode for shakespearean hamlet files.
   \\{shakespeare-mode-map}"
-  (use-local-map shakespeare-mode-map) ;; show mode map
+  (shakespeare-mode 1)
   (setq font-lock-defaults '(shakespeare-hamlet-font-lock-keywords))
   (set (make-local-variable 'sgml-basic-offset) 2))
 
 (define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare (Lucius)"
   "A major mode for shakespearean lucius files.
   \\{shakespeare-mode-map}"
-  (use-local-map shakespeare-mode-map) ;; show mode map
+  (shakespeare-mode 1)
   (font-lock-add-keywords nil shakespeare-lucius-font-lock-keywords)
   ;; syntax for cpp comments
   (modify-syntax-entry ?/ ". 124b" shakespeare-lucius-mode-syntax-table)
@@ -143,7 +138,7 @@
 (define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare (Julius)"
   "A major mode for shakespearean julius files.
   \\{shakespeare-mode-map}"
-  (use-local-map shakespeare-mode-map)
+  (shakespeare-mode 1)
   (font-lock-add-keywords nil shakespeare-julius-font-lock-keywords))
 
 
