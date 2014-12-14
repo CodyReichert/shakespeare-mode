@@ -1,7 +1,6 @@
 #+AUTHOR: Cody Reichert
 #+TITLE: shakespeare-mode.el
 
-* Shakespeare Mode
   A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
 
