@@ -90,7 +90,7 @@
      1 font-lock-function-name-face)
     ;; Attributes: name=val, #id, or .class.
     (,(concat "\\(?:^\\|[ \t]\\)\\(?:\\("
-              shakespeare-hamlet-name-regexp "\\)=\\([^@^ \r\n]*\\)\\|<?\\([.#]"
+              shakespeare-hamlet-name-regexp "\\)=\\([^@#^ \r\n]*\\)\\|<?\\([.#]"
               shakespeare-hamlet-name-regexp "\\)\\)")
      (1 font-lock-variable-name-face nil t) ; Attribute names
      (2 font-lock-string-face nil t) ; Attribute values
