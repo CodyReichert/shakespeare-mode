@@ -103,6 +103,7 @@
 
 
 ;;; Minor Mode for mode-maps and hooks
+;;;###autoload
 (define-minor-mode shakespeare-mode
   "Shakespeare Mode minor mode for keymaps and mode-hooks."
   :init nil
@@ -112,6 +113,7 @@
 
 
 ;;; Derive Major Modes
+;;;###autoload
 (define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare (Hamlet)"
   "A major mode for shakespearean hamlet files.
   \\{shakespeare-mode-map}"
@@ -119,6 +121,7 @@
   (setq font-lock-defaults '(shakespeare-hamlet-font-lock-keywords))
   (set (make-local-variable 'sgml-basic-offset) 2))
 
+;;;###autoload
 (define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare (Lucius)"
   "A major mode for shakespearean lucius files.
   \\{shakespeare-mode-map}"
@@ -135,6 +138,7 @@
   ;; indentation
   (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line))
 
+;;;###autoload
 (define-derived-mode shakespeare-julius-mode javascript-mode "Shakespeare (Julius)"
   "A major mode for shakespearean julius files.
   \\{shakespeare-mode-map}"
@@ -155,7 +159,9 @@
 ;;; Load em up
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.hamlet\\'" . shakespeare-hamlet-mode))
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.lucius\\'" . shakespeare-lucius-mode))
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.julius\\'" . shakespeare-julius-mode))
 
 (provide 'shakespeare-mode)
