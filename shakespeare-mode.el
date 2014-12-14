@@ -4,7 +4,7 @@
 ;;
 ;; Author: Cody Reichert
 ;; URL: http://github.com/CodyReichert/shakespeare-mode
-;; Keywords: shakespe hamlet lucius julius mode
+;; Keywords: shakespeare hamlet lucius julius mode
 ;; Version: DEV
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -21,6 +21,23 @@
 ;; A major mode that provides syntax highlighting an indentation for
 ;; editing Shakespearean templates (hamlet, lucius, julius).
 ;;
+;; Currently, this mode support almost all of the features provided
+;; with Shakespeare templates. Most notable (see the README for a complete list):
+;;
+;; - Variable interpolation syntax highlighting
+;;   #{..}, @{..}, ^{..}, etc
+;; - Control flow statements syntax highlighting
+;;   $if, $forall, $maybe, etc
+;; - Indentation for these modes (mostly derived from their parent modes,
+;;   but it works well).
+;;
+;; There are two packages that helped me out greatly while creating this one
+;; that I'd like to give credit to since I borrowed a few line from each
+;; of them (also see the README):
+;;
+;; * hamlet-mode (https://github.com/lightquake/hamlet-mode)
+;; * less-css-mode (https://github.com/purcell/less-css-mode)
+;;
 ;; Submit issues at https://github.com/CodyReichert/shakespeare-mode
 ;; or email me directly at cody@reichertbrothers.com.
 ;;
@@ -32,11 +49,10 @@
 ;; sgml mode for hamlet
 (require 'sgml-mode)
 
-;; javascript-mode is used for syntax highlighting and indentation
+;; javascript-mode for hamlet
 (autoload 'javascript-mode "javascript-mode" "Javascript-Mode." t)
 
 ;; css mode for lucius
-;; we make sure it's the right one by checking for the functions we need
 (require 'css-mode)
 (unless (or (boundp 'css-navigation-syntax-table)
             (functionp 'css-smie-rules))
@@ -47,13 +63,14 @@
 ;;; Show Hooks
 ;; a hook allows users to run code when this mode is started.
 (defvar shakespeare-mode-hook nil)
-(defvar shakespeare-hamlet-mode-hook nil)
-(defvar shakespeare-lucius-mode-hook nil)
-(defvar shakespeare-julius-mode-hook nil)
+;; (defvar shakespeare-hamlet-mode-hook nil)
+;; (defvar shakespeare-lucius-mode-hook nil)
+;; (defvar shakespeare-julius-mode-hook nil)
 
 
 
 ;;; Key Maps
+;; There is one mode-map for all three file types.
 ;; An example key is defined.
 (defvar shakespeare-mode-map
   (let ((map (make-keymap)))
@@ -67,8 +84,8 @@
 (defconst shakespeare-hamlet-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
 (defconst shakespeare-hamlet-font-lock-keywords
   `(
-    ("^!!!$" . font-lock-keyword-face)
     ;; Tag names.
+    ("^!!!$" . font-lock-keyword-face)
     (,(concat "</?\\(" shakespeare-hamlet-name-regexp "\\)")
      1 font-lock-function-name-face)
     ;; Attributes: name=val, #id, or .class.
@@ -84,7 +101,8 @@
 
 ;;  lucius
 (defconst shakespeare-lucius-font-lock-keywords
-  '(;; Variables
+  '(
+    ;; Variables
     ("@[a-z_-][a-z-_0-9]*" . font-lock-constant-face)
     ("&" . font-lock-preprocessor-face)
     ;; hamlet interpolation and control flow keywords
@@ -104,7 +122,8 @@
 
 
 ;;; Syntax Tables
-;;; the lucius and julius syntax tables are derived from their parent-mode
+;; The lucius and julius syntax tables are derived from their parent-mode
+;;
 ;; Hamlet syntax table
 (defvar shakespeare-hamlet-mode-syntax-table
   (let ((st (make-syntax-table)))
@@ -120,7 +139,6 @@
 (define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare - Hamlet"
   "A major mode for hamlet, lucius, and julius files.
   \\{shakespeare-mode-map}"
-  ;;(kill-all-local-variables) ;; kill all local variables before loading ours
   (set-syntax-table shakespeare-hamlet-mode-syntax-table)
   (use-local-map shakespeare-mode-map) ;; show mode map
   (set (make-local-variable 'font-lock-defaults) ;; set local variables
