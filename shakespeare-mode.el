@@ -25,7 +25,7 @@
 ;; with Shakespeare templates. Most notable (see the README for a complete list):
 ;;
 ;; - Variable interpolation syntax highlighting
-;;   #{..}, @{..}, ^{..}, _{..}
+;;   #{..}, @{..}, ^{..}, _{..}, @?{..}
 ;; - Control flow statements syntax highlighting
 ;;   $if, $forall, $maybe, etc
 ;; - Indentation for these modes (mostly derived from their parent modes,
@@ -96,7 +96,7 @@
      (2 font-lock-string-face nil t) ; Attribute values
      (3 font-lock-variable-name-face nil t)) ; #id and .class
     ;; interpolated variables
-    ("\\([_@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
+    ("\\([_@^#][?]?{[^}]+}\\)" . font-lock-preprocessor-face)
     ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
 
 ;;  lucius
