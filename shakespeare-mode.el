@@ -60,25 +60,6 @@
 
 
 
-;;; Show Hooks
-;; a hook allows users to run code when this mode is started.
-(defvar shakespeare-mode-hook nil)
-;; (defvar shakespeare-hamlet-mode-hook nil)
-;; (defvar shakespeare-lucius-mode-hook nil)
-;; (defvar shakespeare-julius-mode-hook nil)
-
-
-
-;;; Key Maps
-;; There is one mode-map for all three file types.
-;; An example key is defined.
-(defvar shakespeare-mode-map
-  (let ((map (make-keymap)))
-    (define-key map "\C-j" 'newline-and-indent)
-    map)
-  "Keymap for Shakespeare major mode.")
-
-
 ;;; Keyword Highlighting
 ;; hamlet
 (defconst shakespeare-hamlet-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
