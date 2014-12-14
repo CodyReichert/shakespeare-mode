@@ -5,7 +5,7 @@
 
 ** Installation
    The package currently isn't in any emacs repository, but the install in painless.
-   
+
    Clone this repo and add the directory to your emacs load path by adding the following
    line to your .emacs:
 
@@ -55,6 +55,8 @@
         #{...}
         @{...}
         ^{...}
+       @?{...}
+        _{...}
     #+END_SRC
 
     ...these are highlighted inline.
