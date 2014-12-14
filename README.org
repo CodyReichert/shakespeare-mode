@@ -1,21 +1,23 @@
+#+AUTHOR: Cody Reichert
+#+TITLE: shakespeare-mode.el
+
 * Shakespeare Mode
   A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
 
 
 ** Installation
-   The package currently isn't in any emacs repository, but the install in painless.
+   You can install this package from the MELPA repository:
 
-   Clone this repo and add the directory to your emacs load path by adding the following
-   line to your .emacs:
+   #+BEGIN_SRC bash
+       M-x package-install RET shakespeare-mode RET
+   #+END_SRC
+
+   Alternatively, clone this repo and add the directory to your emacs load path by adding the following
+   lines to your .emacs:
 
    #+BEGIN_SRC elisp
        (add-to-list 'load-path "/path/to/this/clone/")
-   #+END_SRC
-
-   and /after/ that line, load shakespeare-mode by adding this line:
-
-   #+BEGIN_SRC elisp
        (load "shakespeare-mode")
    #+END_SRC
 
@@ -23,7 +25,8 @@
 
 
 ** Usage
-   After installation, you'll have three new commands:
+   After installation, you'll have three major modes. =.hamlet=, =.lucius=, and
+   =.julius= files should inherit their mode automatically.
 
    #+BEGIN_SRC elisp
        shakespeare-hamlet-mode
@@ -31,17 +34,12 @@
        shakespeare-lucius-mode
    #+END_SRC
 
-   These are major modes. If you loaded shakespeare-mode correctly, then
-   =.hamlet=, =.lucius=, and =.julius= should inherit their mode automatically.
+   They each have mode-maps and mode-hooks you use to add functions and
+   key bindings to them individually.
 
-   If for any reason they are not loading on the correct file types, you can of
-   course try loading them explicity by running =M-x shakespeare-hamlet-mode= in
-   the appropriate buffer OR you can always try adding the following line to
-   your .emacs (change to the correct file type):
-
-   #+BEGIN_SRC elisp
-       (add-to-list 'auto-mode-alist  '("\\.lucius\\'" . shakespeare-lucius-mode))
-   #+END_SRC
+   Alternatively, a minor mode is also loaded with mode-maps and mode-hooks
+   that runs in /all/ shakespeare buffers. To use this, just hook into
+   =shakespeare-mode=.
 
 
 ** Features
@@ -59,41 +57,36 @@
         _{...}
     #+END_SRC
 
-    ...these are highlighted inline.
-
 *** Hamlet Mode
-    shakespeare-hamlet-mode has full support for most hamlet features (let me know
-    if any are missing!):
+    shakespeare-hamlet-mode has full support for most hamlet features (submit an
+    issue if any are missing!):
 
     - control flow statements (=$if=, =$forall=, =$maybe=, etc)
     - shorthand class and id attributes (=<p .some-class #some-id>=)
-    - optional quotes around attribute values
-    - no need to explicitly tag =div= elements.
+    - optional quotes around attribute values (=<input type=text>=)
+    - no need to explicitly tag =div= elements. (=<.mydiv>=)
 
 *** Lucius Mode
     shakespeare-lucius-mode supports a lot of the same things as shakespeare-hamlet-mode
 
     - url and variable interpolation
-    - nested css blocks
+    - indentation for nested css blocks
     - variable declaration
     - lucius mixins
 
 *** Julius Mode
-    Julius mode is the most basic of the modes, but supports Javascript syntax
-    highlighting (derived from javascript-mode so it should work well with most julius),
-    indentation and the variable interpolation mentioned above.
+    shakespeare-julius-mode is the most basic of the modes, but supports Javascript syntax
+    highlighting indentation and the variable interpolation mentioned above.
 
 
 ** Todo (in order of priority)
-    - Put package in ELPA or similar repository
     - Support for setting option attributes with colons, as dicussed [[http://www.yesodweb.com/book/shakespearean-templates#shakespearean-templates_attributes][here]].
-    - Add syntax support for hamlet pagination
     - Support far Cassius (shakespeare-cassius-mode)
     - Integration with html2hamlet for quick formatting of buffers and regions (eg, copy in html
       and quickly reformat to hamlet.)
 
 
-** Thanks
+**** Thanks
    [[purcell's less-css-mode]]
    I was originally using less-css-mode for editing lucius files, so I used parts of this
    mode's modified syntax-table to compose lucius'.
@@ -102,3 +95,20 @@
    I was able to use parts of the regexp's from this repo for syntax highlighting,
    and parts of the syntax-table. There's been some reformatting and minor restructure
    but this was a big help.
+
+** License
+**** This software is licensed under the GNU General Publice License Version 3.0
+
+     This program is free software: you can redistribute it and/or
+     modify it under the terms of the GNU General Public License as
+     published by the Free Software Foundation, either version 3 of the
+     License, or (at your option) any later version.  This program is
+     distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or
+     FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+     License for more details.  You should have received a copy of the
+     GNU General Public License along with this program. If not, see
+     http://www.gnu.org/licenses/
+
+     For any additional information or questions, you can contact me at
+     cody@reichertbrothers.com
