@@ -1,5 +1,5 @@
 #+AUTHOR: Cody Reichert
-#+TITLE: shakespeare-mode.el
+#+TITLE: shakespeare-mode.el  [[http://melpa.org/#/shakespeare-mode][file:http://melpa.org/packages/shakespeare-mode-badge.svg]]
 
   A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
