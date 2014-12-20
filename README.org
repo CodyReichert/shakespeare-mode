@@ -85,13 +85,11 @@
       and quickly reformat to hamlet.)
 
 
-**** Thanks
-   [[purcell's less-css-mode]]
-   I was originally using less-css-mode for editing lucius files, so I used parts of this
+** Thanks
+   [[https://github.com/purcell/less-css-mode][less-css-mode]] I was originally using less-css-mode for editing lucius files, so I used parts of this
    mode's modified syntax-table to compose lucius'.
 
-   [[https://github.com/lightquake/hamlet-mode][lightquake's hamlet mode]]
-   I was able to use parts of the regexp's from this repo for syntax highlighting,
+   [[https://github.com/lightquake/hamlet-mode][hamlet mode]]  I was able to use parts of the regexp's from this repo for syntax highlighting,
    and parts of the syntax-table. There's been some reformatting and minor restructure
    but this was a big help.
 
