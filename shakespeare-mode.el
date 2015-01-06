@@ -49,7 +49,7 @@
 ;; sgml mode for hamlet
 (require 'sgml-mode)
 
-;; javascript-mode for hamlet
+;; javascript-mode for julius
 (autoload 'javascript-mode "javascript-mode" "Javascript-Mode." t)
 
 ;; css mode for lucius
