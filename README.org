@@ -3,7 +3,8 @@
 
   A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
-
+  
+[[file:shakespeare-mode.jpg]]
 
 ** Installation
    You can install this package from the MELPA repository:
