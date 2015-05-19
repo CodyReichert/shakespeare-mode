@@ -152,7 +152,9 @@
 (defun shakespeare-lucius-indent-line ()
   "Indent current line according to LESS CSS indentation rules."
   (let ((css-navigation-syntax-table shakespeare-lucius-mode-syntax-table))
-    (css-indent-line)))
+    (if (fboundp 'css-indent-line)
+        (css-indent-line)
+      (smie-indent-line))))
 
 
 
