@@ -1,4 +1,5 @@
 #+AUTHOR: Cody Reichert
+#+EMAIL: codyreichert@gmail.com
 #+TITLE: shakespeare-mode.el  [[http://melpa.org/#/shakespeare-mode][file:http://melpa.org/packages/shakespeare-mode-badge.svg]]
 
   A major mode that provides syntax highlighting and indentation for
@@ -17,8 +18,8 @@
    lines to your .emacs:
 
    #+BEGIN_SRC elisp
-       (add-to-list 'load-path "/path/to/this/clone/")
-       (load "shakespeare-mode")
+       (add-to-list 'load-path "/path/to/this/clone")
+       (require 'shakespeare-mode)
    #+END_SRC
 
    And that's it. Open up a hamlet, lucius, or julius file to make sure it worked.
@@ -34,7 +35,7 @@
        shakespeare-lucius-mode
    #+END_SRC
 
-   They each have mode-maps and mode-hooks you use to add functions and
+   They each have mode-maps and hooks you use to add functions and
    key bindings to them individually.
 
    Alternatively, a minor mode is also loaded with mode-maps and mode-hooks
@@ -107,6 +108,3 @@
      License for more details.  You should have received a copy of the
      GNU General Public License along with this program. If not, see
      http://www.gnu.org/licenses/
-
-     For any additional information or questions, you can contact me at
-     cody@reichertbrothers.com

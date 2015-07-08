@@ -1,6 +1,6 @@
 ;;; shakespeare-mode.el --- A major mode for editing Shakespearean templates.
 ;;
-;; Copyright (C) 2014 Cody Reichert
+;; Copyright (C) 2014 - 2015 Cody Reichert
 ;;
 ;; Author: Cody Reichert
 ;; URL: http://github.com/CodyReichert/shakespeare-mode
@@ -96,8 +96,7 @@
 ;; julius
 ;; hamlet interpolation and control flow keywords
 (defconst shakespeare-julius-font-lock-keywords
-  '(
-    ("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
+  '(("\\([@^#]{[^}]+}\\)" . font-lock-preprocessor-face)
     ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
 
 
