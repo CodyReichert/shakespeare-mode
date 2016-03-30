@@ -1,6 +1,6 @@
 #+AUTHOR: Cody Reichert
 #+EMAIL: codyreichert@gmail.com
-#+TITLE: shakespeare-mode.el  [[http://melpa.org/#/shakespeare-mode][file:http://melpa.org/packages/shakespeare-mode-badge.svg]]
+#+TITLE: shakespeare-mode.el  [[http://melpa.org/#/shakespeare-mode][file:http://melpa.org/packages/shakespeare-mode-badge.svg]] [[http://stable.melpa.org/#/shakespeare-mode][file:http://stable.melpa.org/packages/shakespeare-mode-badge.svg]]
 
   A major mode that provides syntax highlighting and indentation for
   editing Shakespearean templates (hamlet, lucius, julius).
@@ -13,6 +13,8 @@
    #+BEGIN_SRC bash
        M-x package-install RET shakespeare-mode RET
    #+END_SRC
+   
+   *Note: shakespeare-mode is also available via [[http://stable.melpa.org/#/shakespeare-mode][melpa-stable]] .*
 
    Alternatively, clone this repo and add the directory to your emacs load path by adding the following
    lines to your .emacs:
