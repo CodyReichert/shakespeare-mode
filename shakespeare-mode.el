@@ -203,7 +203,7 @@ Else, indent current line deeper."
     (goto-char beg)
     (while (< (point) end)
       (shakespeare-hamlet-mode--indent-deeper)
-      )))
+      (forward-line))))
 
 (defun shakespeare-hamlet-mode-indent-region-backward (beg end)
   "just remove indent from each line in the region."
