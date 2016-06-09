@@ -132,8 +132,8 @@
   (modify-syntax-entry ?\n "> b" shakespeare-lucius-mode-syntax-table)
   ;; Special chars that sometimes come at the beginning of words.
   (modify-syntax-entry ?. "'" shakespeare-lucius-mode-syntax-table)
-  (set (make-local-variable 'comment-start) "//")
-  (set (make-local-variable 'comment-end) "")
+  (set (make-local-variable 'comment-start) "/*")
+  (set (make-local-variable 'comment-end) "*/")
   ;; indentation
   (set (make-local-variable 'indent-line-function) 'shakespeare-lucius-indent-line))
 
