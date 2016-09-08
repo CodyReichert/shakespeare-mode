@@ -80,6 +80,149 @@
     ("\\([_@^#][?]?{[^}]+}\\)" . font-lock-preprocessor-face)
     ("^[ \t]*\\($\\w+\\)" . font-lock-keyword-face)))
 
+;; hamlet indentation
+(defun shakespeare-hamlet-mode--count-indent ()
+  "It just counts indent of current line."
+  (let ((count 0))
+    (save-excursion
+      (beginning-of-line)
+      (while (string-match (rx blank) (char-to-string (char-after)))
+    	(setq count (+ count 1))
+    	(forward-char))
+      count)))
+
+(defun shakespeare-hamlet-mode--set-indent (indent-count)
+  "Set indent of current line to indent-count."
+  (save-excursion
+    (back-to-indentation)
+    (delete-region
+     (point-at-bol)
+     (point))
+    (cl-loop repeat indent-count
+	     do (insert-before-markers " "))
+    ))
+
+(defun shakespeare-hamlet-mode--blank-line-p ()
+  "Return t if the line with the cursor is blank."
+    (if (= (line-beginning-position) (line-end-position))
+	t
+      nil))
+
+(defun shakespeare-hamlet-mode--count-indent-of-previous-line ()
+  "Count indent of previous non-blank line."
+  (save-excursion
+    (forward-line -1)
+    (while (shakespeare-hamlet-mode--blank-line-p)
+      (forward-line -1))
+    (shakespeare-hamlet-mode--count-indent)))
+
+(defun shakespeare-hamlet-mode--indent-deeper ()
+  "Add 2 spaces to current line's indent."
+  (let ((indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
+    (shakespeare-hamlet-mode--set-indent (+ indent-of-current-line sgml-basic-offset))))
+
+(defun shakespeare-hamlet-mode--indent-shallower ()
+  "Remove 2 spaces from current line's indent."
+  (let ((indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
+    (shakespeare-hamlet-mode--set-indent (- indent-of-current-line sgml-basic-offset))))
+
+(defun shakespeare-hamlet-mode-indent-line ()
+  "Cycle the indent like hyai-mode.
+If current line's indent is deeper than previous line's, set current line's indent to zero.
+Else, indent current line deeper."
+  (interactive)
+  (let* ((indent-of-previous-line (shakespeare-hamlet-mode--count-indent-of-previous-line))
+	 (maximum-indent (+ sgml-basic-offset indent-of-previous-line))
+	 (indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
+
+    (if (>= indent-of-current-line maximum-indent)
+	(shakespeare-hamlet-mode--set-indent 0)
+      (shakespeare-hamlet-mode--indent-deeper))))
+
+(defun shakespeare-hamlet-mode-indent-backward ()
+  "Similar to `shakespeare-hamlet-mode-indent-line', but cycle inversely."
+  (interactive)
+  (let* ((indent-of-previous-line (shakespeare-hamlet-mode--count-indent-of-previous-line))
+	 (maximum-indent (+ sgml-basic-offset indent-of-previous-line))
+	 (indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
+
+      (if (= 0 indent-of-current-line)
+	  (shakespeare-hamlet-mode--set-indent maximum-indent) ; if the indent is zero, cycle to max
+	(shakespeare-hamlet-mode--indent-shallower)) ; else, indent shallower
+    ))
+
+(defun shakespeare-hamlet-mode--indent-as-previous-line ()
+  "Indent current line exactly as deep as previous line."
+  (shakespeare-hamlet-mode--set-indent (shakespeare-hamlet-mode--count-indent-of-previous-line)))
+
+(defun shakespeare-hamlet-mode--cursor-is-before-indent-beginning-p ()
+  "If the cursor is more left than first non-blank character in the line, return t."
+  (let ((cursor-point (point))
+	(indent-head-point
+	 (save-excursion
+	   (back-to-indentation)
+	   (point))))
+    (if (<= cursor-point indent-head-point)
+	t
+      nil)))
+
+(defun shakespeare-hamlet-mode--previous-line-is-control-syntax-p ()
+  "If previous line begins with $if, $forall, $maybe, etc, return t."
+  (save-excursion
+    (forward-line -1)
+    (while (shakespeare-hamlet-mode--blank-line-p)
+      (forward-line -1))
+    (back-to-indentation)
+    (string= "$" (char-to-string (char-after)))))
+
+(defun shakespeare-hamlet-mode-newline-and-indent ()
+  "Insert newline and indent it without touching previous line. It is intended to bind to RET."
+  (interactive)
+  (let ((beginning-of-indent
+	 (set-marker (make-marker)
+		     (save-excursion
+		       (back-to-indentation)
+		       (point)))))
+
+    (if (shakespeare-hamlet-mode--cursor-is-before-indent-beginning-p)
+	(progn
+	  (save-excursion
+	   (beginning-of-line)
+	   (newline))
+	  (goto-char beginning-of-indent))
+      (progn
+	(newline)
+	(shakespeare-hamlet-mode--indent-as-previous-line)
+	(when (shakespeare-hamlet-mode--previous-line-is-control-syntax-p)
+	  (shakespeare-hamlet-mode--indent-deeper))))))
+
+(defun shakespeare-hamlet-mode-indent-region (beg end)
+  "Just add indent on each line in the region."
+  (interactive "r")
+  (save-excursion
+    (goto-char beg)
+    (while (< (point) end)
+      (shakespeare-hamlet-mode--indent-deeper)
+      (forward-line))))
+
+(defun shakespeare-hamlet-mode-indent-region-backward (beg end)
+  "just remove indent from each line in the region."
+  (interactive "r")
+  (save-excursion
+    (goto-char beg)
+    (while (< (point) end)
+      (shakespeare-hamlet-mode--indent-shallower)
+      (forward-line))))
+
+(defun shakespeare-hamlet-backtab ()
+  "If region is active, indent the region backward.
+If region is not active, just indent the line backward.
+It is intended to bind to backtab (shift-TAB)."
+  (interactive)
+  (if (region-active-p)
+      (shakespeare-hamlet-mode-indent-region-backward (region-beginning) (region-end))
+    (shakespeare-hamlet-mode-indent-backward)))
+
 ;;  lucius
 (defconst shakespeare-lucius-font-lock-keywords
   '(
@@ -112,13 +255,22 @@
 
 
 ;;; Derive Major Modes
+
 ;;;###autoload
 (define-derived-mode shakespeare-hamlet-mode sgml-mode "Shakespeare (Hamlet)"
   "A major mode for shakespearean hamlet files.
   \\{shakespeare-mode-map}"
+  :keymap shakespeare-hamlet-mode-map
   (shakespeare-mode 1)
+  (setq-local indent-line-function 'shakespeare-hamlet-mode-indent-line)
+  (setq-local indent-region-function 'shakespeare-hamlet-indent-region)
   (setq font-lock-defaults '(shakespeare-hamlet-font-lock-keywords))
   (set (make-local-variable 'sgml-basic-offset) 2))
+
+(define-key shakespeare-hamlet-mode-map (kbd "<backtab>") 'shakespeare-hamlet-backtab)
+(define-key shakespeare-hamlet-mode-map (kbd "RET") 'shakespeare-hamlet-mode-newline-and-indent)
+
+
 
 ;;;###autoload
 (define-derived-mode shakespeare-lucius-mode css-mode "Shakespeare (Lucius)"
@@ -154,8 +306,6 @@
     (if (fboundp 'css-indent-line)
         (css-indent-line)
       (smie-indent-line))))
-
-
 
 ;;; Load em up
 ;;;###autoload
