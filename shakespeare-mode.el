@@ -84,12 +84,13 @@
 (defun shakespeare-hamlet-mode--count-indent ()
   "It just counts indent of current line."
   (let ((count 0))
-    (save-excursion
-      (beginning-of-line)
-      (while (string-match (rx blank) (char-to-string (char-after)))
-    	(setq count (+ count 1))
-    	(forward-char))
-      count)))
+    (unless (eq 'nil (char-after))
+      (save-excursion
+        (beginning-of-line)
+        (while (string-match (rx blank) (char-to-string (char-after)))
+    	  (setq count (+ count 1))
+    	  (forward-char))))
+    count))
 
 (defun shakespeare-hamlet-mode--set-indent (indent-count)
   "Set indent of current line to INDENT-COUNT."
@@ -106,6 +107,16 @@
     (if (= (line-beginning-position) (line-end-position))
 	t
       nil))
+
+(defun shakespeare-mode--first-non-empty-line-p ()
+  "Return t if this is the first non-empty-line."
+  (let ((emp t))
+    (save-excursion
+      (while (not (= 1 (line-number-at-pos)))
+        (forward-line -1)
+        (when (not (shakespeare-hamlet-mode--blank-line-p))
+          (setq emp nil))))
+    emp))
 
 (defun shakespeare-hamlet-mode--count-indent-of-previous-line ()
   "Count indent of previous non-blank line."
@@ -127,16 +138,18 @@
 
 (defun shakespeare-hamlet-mode-indent-line ()
   "Cycle the indent like hyai-mode.
-If current line's indent is deeper than previous line's, set current line's indent to zero.
-Else, indent current line deeper."
+If current line's indent is deeper than previous line's, set current
+line's indent to zero.  Else, indent current line deeper."
   (interactive)
-  (let* ((indent-of-previous-line (shakespeare-hamlet-mode--count-indent-of-previous-line))
-	 (maximum-indent (+ sgml-basic-offset indent-of-previous-line))
-	 (indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
+  (if (shakespeare-mode--first-non-empty-line-p)
+      'noindent
+    (let* ((indent-of-previous-line (shakespeare-hamlet-mode--count-indent-of-previous-line))
+           (maximum-indent (+ sgml-basic-offset indent-of-previous-line))
+           (indent-of-current-line (shakespeare-hamlet-mode--count-indent)))
 
-    (if (>= indent-of-current-line maximum-indent)
-	(shakespeare-hamlet-mode--set-indent 0)
-      (shakespeare-hamlet-mode--indent-deeper))))
+      (if (>= indent-of-current-line maximum-indent)
+          (shakespeare-hamlet-mode--set-indent 0)
+        (shakespeare-hamlet-mode--indent-deeper)))))
 
 (defun shakespeare-hamlet-mode-indent-backward ()
   "Similar to `shakespeare-hamlet-mode-indent-line', but cycle inversely."
