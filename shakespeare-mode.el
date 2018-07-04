@@ -92,15 +92,14 @@
       count)))
 
 (defun shakespeare-hamlet-mode--set-indent (indent-count)
-  "Set indent of current line to indent-count."
+  "Set indent of current line to INDENT-COUNT."
   (save-excursion
     (back-to-indentation)
     (delete-region
      (point-at-bol)
      (point))
     (cl-loop repeat indent-count
-	     do (insert-before-markers " "))
-    ))
+	     do (insert-before-markers " "))))
 
 (defun shakespeare-hamlet-mode--blank-line-p ()
   "Return t if the line with the cursor is blank."
@@ -148,8 +147,7 @@ Else, indent current line deeper."
 
       (if (= 0 indent-of-current-line)
 	  (shakespeare-hamlet-mode--set-indent maximum-indent) ; if the indent is zero, cycle to max
-	(shakespeare-hamlet-mode--indent-shallower)) ; else, indent shallower
-    ))
+	(shakespeare-hamlet-mode--indent-shallower)))) ; else, indent shallower
 
 (defun shakespeare-hamlet-mode--indent-as-previous-line ()
   "Indent current line exactly as deep as previous line."
